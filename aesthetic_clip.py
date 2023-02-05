@@ -18,7 +18,7 @@ from tqdm.auto import tqdm, trange
 from modules.shared import opts, device
 
 
-aesthetic_embeddings_dir = os.path.join(scripts.basedir(), "aesthetic_embeddings")
+aesthetic_embeddings_dir = os.path.join(scripts.basedir(), "embeddings")
 os.makedirs(aesthetic_embeddings_dir, exist_ok=True)
 
 aesthetic_embeddings = {}
