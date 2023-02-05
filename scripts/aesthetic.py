@@ -47,8 +47,8 @@ def on_script_unloaded():
         cond_stage_model.process_tokens = cond_stage_model.process_tokens.process_tokens
 
 
-def on_ui_tabs():
-    with gr.Blocks(analytics_enabled=False) as aesthetic_interface:
+def on_ui_tabs(ui_train_tab_params):
+    with gr.Tab(label="Train aesthetic embedding") as aesthetic_interface:
         with gr.Row().style(equal_height=False):
             with gr.Column(variant='panel'):
                 gr.HTML(value="Create an aesthetic embedding out of any number of images")
@@ -97,4 +97,4 @@ def on_ui_tabs():
 
 script_callbacks.on_script_unloaded(on_script_unloaded)
 script_callbacks.on_model_loaded(on_model_loaded)
-script_callbacks.on_ui_tabs(on_ui_tabs)
+script_callbacks.on_ui_train_tabs(on_ui_tabs)
