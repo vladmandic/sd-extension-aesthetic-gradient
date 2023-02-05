@@ -1,2 +1,3 @@
 __pycache__
-aesthetic_embeddings
+embeddings/*.pt
+

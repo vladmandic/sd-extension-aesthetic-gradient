@@ -103,8 +103,8 @@ def generate_imgs_embd(name, folder, batch_size):
 
     with torch.no_grad():
         embs = []
-        for paths in tqdm(iter_to_batched(get_all_images_in_folder(folder), batch_size),
-                          desc=f"Generating embeddings for {name}"):
+        images = get_all_images_in_folder(folder)
+        for paths in tqdm(iter_to_batched(images, batch_size), desc=f"Training aesthetic gradient embeddings: {name} ({len(images)} images)"):
             if shared.state.interrupted:
                 break
             inputs = processor(images=[Image.open(path) for path in paths], return_tensors="pt").to(device)
@@ -224,7 +224,7 @@ class AestheticCLIP:
                     model.text_model.parameters(), lr=self.aesthetic_lr
                 )
 
-                for _ in trange(self.aesthetic_steps, desc="Aesthetic optimization"):
+                for _ in trange(self.aesthetic_steps, desc="Aesthetic gradient"):
                     text_embs = model.get_text_features(input_ids=tokens)
                     text_embs = text_embs / text_embs.norm(dim=-1, keepdim=True)
                     sim = text_embs @ img_embs.T
