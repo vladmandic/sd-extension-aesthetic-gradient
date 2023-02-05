@@ -60,29 +60,26 @@ def create_ui():
     import modules.ui
 
     with gr.Group():
-        with gr.Accordion("Open for Clip Aesthetic!", open=False):
+        with gr.Accordion("Aesthetic gradient", open=False):
             with gr.Row():
                 aesthetic_weight = gr.Slider(minimum=0, maximum=1, step=0.01, label="Aesthetic weight",
                                              value=0.9)
                 aesthetic_steps = gr.Slider(minimum=0, maximum=50, step=1, label="Aesthetic steps", value=5)
 
             with gr.Row():
-                aesthetic_lr = gr.Textbox(label='Aesthetic learning rate',
-                                          placeholder="Aesthetic learning rate", value="0.0001")
+                aesthetic_lr = gr.Textbox(label='Learning rate', placeholder="Learning rate", value="0.0001")
                 aesthetic_slerp = gr.Checkbox(label="Slerp interpolation", value=False)
-                aesthetic_imgs = gr.Dropdown(sorted(aesthetic_embeddings.keys()),
-                                             label="Aesthetic imgs embedding",
-                                             value="None")
+                aesthetic_imgs = gr.Dropdown(sorted(aesthetic_embeddings.keys()), label="Embedding", value="None")
 
                 modules.ui.create_refresh_button(aesthetic_imgs, update_aesthetic_embeddings, lambda: {"choices": sorted(aesthetic_embeddings.keys())}, "refresh_aesthetic_embeddings")
 
             with gr.Row():
-                aesthetic_imgs_text = gr.Textbox(label='Aesthetic text for imgs',
+                aesthetic_imgs_text = gr.Textbox(label='Aesthetic text',
                                                  placeholder="This text is used to rotate the feature space of the imgs embs",
                                                  value="")
                 aesthetic_slerp_angle = gr.Slider(label='Slerp angle', minimum=0, maximum=1, step=0.01,
                                                   value=0.1)
-                aesthetic_text_negative = gr.Checkbox(label="Is negative text", value=False)
+                aesthetic_text_negative = gr.Checkbox(label="Negative", value=False)
 
     return aesthetic_weight, aesthetic_steps, aesthetic_lr, aesthetic_slerp, aesthetic_imgs, aesthetic_imgs_text, aesthetic_slerp_angle, aesthetic_text_negative
 
